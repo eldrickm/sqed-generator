@@ -29,6 +29,11 @@ See ../FormatParsers/format_parser.py to learn how the format file parser works.
 parser_display(file) function at the bottom to display exactly how the data structure looks 
 after the parser ingests a given format file. 
 
+The directory ../Design_Independent_QED_Files contains Verilog source
+files of the QED module implementation that are independent of the
+design for which we want to perform SQED. These source files can be
+copied and used together with the sources that are generated.
+
 ###########################################
                                       SETUP
 ###########################################
