@@ -18,7 +18,7 @@
 # down below. Note the relative ordering of these sections is
 # not important, as long as they exist both here, and in down below
 # in the same relative order.
-SECTIONS = SIC ISA QEDCONSTRAINTS REGISTERS MEMORY BITFIELDS INSTYPES INSFIELDS INSREQS R I LW SW NOP J
+SECTIONS = SIC ISA QEDCONSTRAINTS REGISTERS MEMORY BITFIELDS INSTYPES INSFIELDS INSREQS R I LW SW NOP J LUI AUIPC
 
 # This defines section SIC (Single Instruction Checking only).
 # You do not need to define this section if you only want
@@ -100,7 +100,7 @@ CONSTRAINT R,I,LW,SW,(rd != 0_5)
 _ISA
 num_registers = 32
 instruction_length = 32
-pipeline_depth = 6
+pipeline_depth = 3
 active_low = 1
 
 # This section defines what constraints to apply onto
@@ -141,10 +141,10 @@ imm12 = 31 20
 imm7 = 31 25
 imm5 = 11 7
 jimm20 = 31 31
-jimm10 = 21 30
+jimm10 = 30 21
 jimm11 = 20 20
 jimm19 = 19 12
-
+uimm31 = 31 12
 
 # This defines the instruction types for the ISA.
 _INSTYPES
@@ -159,6 +159,7 @@ CONSTRAINT IMMEDIATETYPE,I
 CONSTRAINT REGISTERTYPE,R
 CONSTRAINT NOPTYPE,NOP
 CONSTRAINT JUMPTYPE,J
+CONSTRAINT UTYPE,LUI,AUIPC
 
 # Notice here we are defining 'fields' such as
 # 'R', 'I', etc... without assigning values. See
@@ -170,6 +171,8 @@ LW
 SW
 NOP
 J
+LUI
+AUIPC
 
 # This defines which bit fields are present in
 # each instruction type (in the corresponding order
@@ -181,6 +184,8 @@ LW = imm12 rs1 funct3 rd opcode
 SW = imm7 rs2 rs1 funct3 imm5 opcode
 NOP = imm12 rs1 funct3 rd opcode
 J = jimm20 jimm10 jimm11 jimm19 rd opcode
+LUI = uimm31 rd opcode
+AUIPC = uimm31 rd opcode
 
 # This section defines the requirements
 # to determine what instruction type a
@@ -210,6 +215,15 @@ funct3 = 010
 SW
 opcode = 0100011
 funct3 = 010
+
+J
+opcode = 1101111
+
+LUI
+opcode = 0110111
+
+AUIPC
+opcode = 0010111
 
 # The following sections (such as 'R', etc...) now define
 # the instructions associated with each instruction type in
@@ -361,8 +375,16 @@ NOP
 opcode = 1111111
 
 _J
-J
+JAL
 opcode = 1101111
+
+_LUI
+LUI
+opcode = 0110111
+
+_AUIPC
+AUIPC
+opcode = 0010111
 
 ####################### SQED Generator ONLY
 
