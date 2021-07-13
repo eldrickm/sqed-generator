@@ -290,26 +290,6 @@ funct3 = 111
 funct7 = 0000000
 opcode = 0110011
 
-MUL
-funct3 = 000
-funct7 = 0000001
-opcode = 0110011
-
-MULH
-funct3 = 001
-funct7 = 0000001
-opcode = 0110011
-
-MULHSU
-funct3 = 010
-funct7 = 0000001
-opcode = 0110011
-
-MULHU
-funct3 = 011
-funct7 = 0000001
-opcode = 0110011
-
 _I
 ADDI
 funct3 = 000
