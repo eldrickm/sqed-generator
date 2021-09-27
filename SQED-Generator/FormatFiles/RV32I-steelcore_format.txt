@@ -10,7 +10,7 @@
 # to add notes, or comment out lines. They will not be parsed.
 
 
-SECTIONS = ISA QEDCONSTRAINTS REGISTERS MEMORY BITFIELDS INSTYPES INSFIELDS INSREQS R I LW SW B LUI AUIPC J NOP
+SECTIONS = ISA QEDCONSTRAINTS REGISTERS MEMORY BITFIELDS INSTYPES INSFIELDS INSREQS R I SYSTEM LW SW B LUI AUIPC J NOP
 
 
 #===============================================================================
@@ -66,7 +66,7 @@ bimm4 = 11 8
 #===============================================================================
 _INSTYPES
 CONSTRAINT RTYPE,R
-CONSTRAINT ITYPE,I
+CONSTRAINT ITYPE,I,SYSTEM
 CONSTRAINT MEMORYTYPE,LW,SW
 CONSTRAINT BTYPE,B
 CONSTRAINT UTYPE,LUI,AUIPC
@@ -75,6 +75,7 @@ CONSTRAINT NOPTYPE,NOP
 
 R
 I
+SYSTEM
 LW
 SW
 B
@@ -88,6 +89,7 @@ NOP
 _INSFIELDS
 R = funct7 rs2 rs1 funct3 rd opcode
 I = imm12 rs1 funct3 rd opcode
+SYSTEM = imm12 rs1 funct3 rd opcode
 LW = imm12 rs1 funct3 rd opcode
 SW = imm7 rs2 rs1 funct3 imm5 opcode
 B = bimm12 bimm10 rs2 rs1 funct3 bimm4 bimm11 opcode
@@ -104,6 +106,9 @@ opcode = 0110011
 
 I
 opcode = 0010011
+
+SYSTEM
+opcode = 1110011
 
 LW
 opcode = 0000011
@@ -218,6 +223,24 @@ SRAI
 funct3 = 101
 funct7 = 0100000
 opcode = 0010011
+
+
+#===============================================================================
+_SYSTEM
+
+ECALL
+imm12 = 000000000000
+rs1 = 00000
+funct3 = 000
+rd = 00000
+opcode = 1110011
+
+EBREAK
+imm12 = 000000000001
+rs1 = 00000
+funct3 = 000
+rd = 00000
+opcode = 1110011
 
 
 #===============================================================================
