@@ -10,7 +10,7 @@
 # to add notes, or comment out lines. They will not be parsed.
 
 
-SECTIONS = ISA QEDCONSTRAINTS REGISTERS MEMORY BITFIELDS INSTYPES INSFIELDS INSREQS R I SYSTEM FENCE LW SW B LUI AUIPC J NOP
+SECTIONS = ISA QEDCONSTRAINTS REGISTERS MEMORY BITFIELDS INSTYPES INSFIELDS INSREQS R I SYSTEM FENCE JALR LW SW B LUI AUIPC J NOP
 
 
 #===============================================================================
@@ -66,7 +66,7 @@ bimm4 = 11 8
 #===============================================================================
 _INSTYPES
 CONSTRAINT RTYPE,R
-CONSTRAINT ITYPE,I,SYSTEM,FENCE
+CONSTRAINT ITYPE,I,SYSTEM,FENCE,JALR
 CONSTRAINT MEMORYTYPE,LW,SW
 CONSTRAINT BTYPE,B
 CONSTRAINT UTYPE,LUI,AUIPC
@@ -77,6 +77,7 @@ R
 I
 SYSTEM
 FENCE
+JALR
 LW
 SW
 B
@@ -92,6 +93,7 @@ R = funct7 rs2 rs1 funct3 rd opcode
 I = imm12 rs1 funct3 rd opcode
 SYSTEM = imm12 rs1 funct3 rd opcode
 FENCE = imm12 rs1 funct3 rd opcode
+JALR = imm12 rs1 funct3 rd opcode
 LW = imm12 rs1 funct3 rd opcode
 SW = imm7 rs2 rs1 funct3 imm5 opcode
 B = bimm12 bimm10 rs2 rs1 funct3 bimm4 bimm11 opcode
@@ -114,6 +116,9 @@ opcode = 1110011
 
 FENCE
 opcode = 0001111
+
+JALR
+opcode = 1100111
 
 LW
 opcode = 0000011
@@ -254,6 +259,14 @@ _FENCE
 FENCE
 funct3 = 000
 opcode = 0001111
+
+
+#===============================================================================
+_JALR
+
+JALR
+funct3 = 000
+opcode = 1100111
 
 
 #===============================================================================
